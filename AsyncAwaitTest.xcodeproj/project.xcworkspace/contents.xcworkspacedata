@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:TEst.xcodeproj">
+      location = "self:/Users/Bosian/Documents/Git/AsyncAwaitTest/AsyncAwaitTest.xcodeproj">
    </FileRef>
 </Workspace>

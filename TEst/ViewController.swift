@@ -9,73 +9,263 @@
 import UIKit
 
 struct Task<T> {
-    var result: T?
+    
+    private let group: DispatchGroup
+    private let block: () -> T
+    
+    /// 以同步方式取值
+    var result: T {
+        
+        var value: T?
+        
+        group.enter()
+        async(.global()) {
+            
+            value = self.block()
+            
+            self.group.leave()
+        }
+        
+        group.wait()
+        
+        return value!
+    }
+    
+    init(group: DispatchGroup = DispatchGroup(), block: @escaping () -> T) {
+        self.group = group
+        self.block = block
+    }
+    
+    func runAsync() {
+        async(.global()) {
+            _ = self.block()
+        }
+    }
 }
 
-func async(queue: DispatchQueue, block: @escaping () -> Void) {
+func await<T>(_ task: Task<T>, updateUI: ((_ result: T) -> Void)? = nil) -> T {
+    
+    let result = task.result
+    
+    async(.main) { 
+        updateUI?(result)
+    }
+    
+    return result
+}
+
+func async(_ queue: DispatchQueue, block: @escaping () -> Void) {
     queue.async {
         block()
     }
 }
 
-func await<T>(block: (_ group: DispatchGroup) -> T) -> T {
-    
-    let group = DispatchGroup()
-    group.enter()
-    
-    let result = block(group)
-    
-    group.wait()
-    
-    return result
-}
-
-func downloadAsync(group: DispatchGroup) -> String {
-    
-    var result: String = ""
-    
-    DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
-        
-        print("6, \(Thread.isMainThread)")
-        
-        result = "data"
-        group.leave()
-    }
-    
-    print("5, \(Thread.isMainThread)")
-    
-    group.wait()
-    
-    return result
-}
-
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        asyncFunction()
-    }
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-    func asyncFunction() {
-        
-        print("1, \(Thread.isMainThread)")
-        
-        async(queue: .main) {
-            
-            print("3, \(Thread.isMainThread)")
-
-            let result = await { (group) -> String in
-                print("4, \(Thread.isMainThread)")
-                return downloadAsync(group: group)
-            }
-            
-            print(result)
-            
-            print("7, \(Thread.isMainThread)")
-        }
-        
-        print("2, \(Thread.isMainThread)")
+    @IBAction func buttonHandler(_ sender: UIButton) {
+        runAsync2()
     }
 }
 
+extension ViewController {
+    
+    /// Task 版 (runAsync)
+    fileprivate func runAsync1() {
+        
+        activityIndicator.startAnimating()
+        
+        async(.global()) { [weak self] in
+            
+            let task = Task { () -> String in
+                print("running")
+                Thread.sleep(forTimeInterval: 2)
+                return "data"
+            }
+            
+            task.runAsync()
+            
+            print("finish!")
+            
+            async(.main, block: {
+                self?.activityIndicator.stopAnimating()
+            })
+        }
+
+    }
+    
+    /// Task 版 (await)
+    fileprivate func runAsync2() {
+        
+        activityIndicator.startAnimating()
+        
+        async(.global()) { [weak self] in
+            
+            let task = Task { () -> String in
+                print("running")
+                Thread.sleep(forTimeInterval: 2)
+                return "data"
+            }
+            
+            let result1 = await(task) { (result) in
+                print("update UI! 1")
+            }
+            
+            print("result1 \(result1)")
+            
+            let task2 = Task { () -> String in
+                print("running")
+                Thread.sleep(forTimeInterval: 2)
+                return "data"
+            }
+            
+            let result2 = await(task2, updateUI: { (result) in
+                print("update UI! 2")
+            })
+            
+            print("result2 \(result2)")
+            
+            let task3 = Task { () -> String in
+                print("running")
+                Thread.sleep(forTimeInterval: 2)
+                return "data"
+            }
+            
+            let result3 = await(task3)
+            print("result3 \(result3)")
+            
+            async(.main, block: {
+                self?.activityIndicator.stopAnimating()
+            })
+            
+            print("background async finish!")
+        }
+    }
+    
+    /// Task 版 (巢狀 await)
+    fileprivate func runAsync4() {
+        
+        activityIndicator.startAnimating()
+        
+        async(.global()) { [weak self] in
+            
+            let task = Task { () -> String in
+                
+                print("running 1")
+                
+                let task = Task { () -> String in
+                    
+                    print("running 2")
+                    Thread.sleep(forTimeInterval: 2)
+                    
+                    return "data"
+                }
+                
+                return await(task)
+            }
+            
+            print(await(task))
+            
+            print("finish!")
+            
+            async(.main, block: {
+                self?.activityIndicator.stopAnimating()
+            })
+        }
+    }
+    
+    /// Task 版 (await Task<Task<T>>)
+    fileprivate func runAsync5() {
+        
+        activityIndicator.startAnimating()
+        
+        async(.global()) { [weak self] in
+            
+            let task = Task { () -> Task<String> in
+                
+                print("running 1")
+                
+                return Task { () -> String in
+                    
+                    print("running 2")
+                    Thread.sleep(forTimeInterval: 2)
+                    
+                    return "data"
+                }
+            }
+            
+            let innserTask = await(task)
+            print(await(innserTask))
+            
+            print("finish!")
+            
+            async(.main, block: {
+                self?.activityIndicator.stopAnimating()
+            })
+        }
+    }
+    
+    /// Task 版 (runAsync Task<Task<T>>)
+    fileprivate func runAsync6() {
+        
+        activityIndicator.startAnimating()
+        
+        async(.global()) { [weak self] in
+            
+            let task = Task { () -> Task<String> in
+                
+                print("running 1")
+                
+                return Task { () -> String in
+                    
+                    print("running 2")
+                    Thread.sleep(forTimeInterval: 2)
+                    
+                    return "data"
+                }
+            }
+            
+            task.runAsync()
+            
+            print("finish!")
+            
+            async(.main, block: {
+                self?.activityIndicator.stopAnimating()
+            })
+        }
+    }
+    
+    /// runAsync2 展開版 (不使用 async 及 await)
+    fileprivate func runAsync0() {
+        
+        activityIndicator.startAnimating()
+        
+        DispatchQueue.global().async { [weak self] in
+            
+            var result: String = ""
+            
+            let group = DispatchGroup()
+            
+            group.enter()
+            
+            DispatchQueue.global().async(group: group, execute: DispatchWorkItem(block: {
+                print("running")
+                Thread.sleep(forTimeInterval: 2)
+                
+                result = "data"
+                
+                group.leave()
+            }))
+            
+            group.wait()
+            
+            print(result)
+            print("finish!")
+            
+            DispatchQueue.main.async {
+                self?.activityIndicator.stopAnimating()
+            }
+        }
+    }
+}

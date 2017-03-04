@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96FF37E01E67EEDC00AE4A9E"
-               BuildableName = "TEst.app"
-               BlueprintName = "TEst"
-               ReferencedContainer = "container:TEst.xcodeproj">
+               BuildableName = "AsyncAwaitTest.app"
+               BlueprintName = "AsyncAwaitTest"
+               ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96FF37F41E67EEDC00AE4A9E"
-               BuildableName = "TEstTests.xctest"
-               BlueprintName = "TEstTests"
-               ReferencedContainer = "container:TEst.xcodeproj">
+               BuildableName = "AsyncAwaitTestTests.xctest"
+               BlueprintName = "AsyncAwaitTestTests"
+               ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96FF37FF1E67EEDC00AE4A9E"
-               BuildableName = "TEstUITests.xctest"
-               BlueprintName = "TEstUITests"
-               ReferencedContainer = "container:TEst.xcodeproj">
+               BuildableName = "AsyncAwaitTestUITests.xctest"
+               BlueprintName = "AsyncAwaitTestUITests"
+               ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "96FF37E01E67EEDC00AE4A9E"
-            BuildableName = "TEst.app"
-            BlueprintName = "TEst"
-            ReferencedContainer = "container:TEst.xcodeproj">
+            BuildableName = "AsyncAwaitTest.app"
+            BlueprintName = "AsyncAwaitTest"
+            ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "96FF37E01E67EEDC00AE4A9E"
-            BuildableName = "TEst.app"
-            BlueprintName = "TEst"
-            ReferencedContainer = "container:TEst.xcodeproj">
+            BuildableName = "AsyncAwaitTest.app"
+            BlueprintName = "AsyncAwaitTest"
+            ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -95,9 +95,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "96FF37E01E67EEDC00AE4A9E"
-            BuildableName = "TEst.app"
-            BlueprintName = "TEst"
-            ReferencedContainer = "container:TEst.xcodeproj">
+            BuildableName = "AsyncAwaitTest.app"
+            BlueprintName = "AsyncAwaitTest"
+            ReferencedContainer = "container:AsyncAwaitTest.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
