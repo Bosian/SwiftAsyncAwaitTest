@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9617DB291E6C917A0062A33F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9617DB281E6C917A0062A33F /* Task.swift */; };
+		9617DB2B1E6C919B0062A33F /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9617DB2A1E6C919B0062A33F /* Global.swift */; };
 		96FF37E51E67EEDC00AE4A9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FF37E41E67EEDC00AE4A9E /* AppDelegate.swift */; };
 		96FF37E71E67EEDC00AE4A9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FF37E61E67EEDC00AE4A9E /* ViewController.swift */; };
 		96FF37EA1E67EEDC00AE4A9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96FF37E81E67EEDC00AE4A9E /* Main.storyboard */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9617DB281E6C917A0062A33F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		9617DB2A1E6C919B0062A33F /* Global.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		96FF37E11E67EEDC00AE4A9E /* AsyncAwaitTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AsyncAwaitTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		96FF37E41E67EEDC00AE4A9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		96FF37E61E67EEDC00AE4A9E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,10 +39,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9617DB271E6C91690062A33F /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				9617DB281E6C917A0062A33F /* Task.swift */,
+				9617DB2A1E6C919B0062A33F /* Global.swift */,
+			);
+			name = Framework;
+			path = TEst;
+			sourceTree = "<group>";
+		};
+		9617DB2C1E6C91CA0062A33F /* Page */ = {
+			isa = PBXGroup;
+			children = (
+				96FF37E81E67EEDC00AE4A9E /* Main.storyboard */,
+				96FF37E61E67EEDC00AE4A9E /* ViewController.swift */,
+			);
+			name = Page;
+			sourceTree = "<group>";
+		};
 		96FF37D81E67EEDC00AE4A9E = {
 			isa = PBXGroup;
 			children = (
-				96FF37E31E67EEDC00AE4A9E /* TEst */,
+				9617DB271E6C91690062A33F /* Framework */,
+				96FF37E31E67EEDC00AE4A9E /* AsyncAwaitTest */,
 				96FF37E21E67EEDC00AE4A9E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,16 +75,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		96FF37E31E67EEDC00AE4A9E /* TEst */ = {
+		96FF37E31E67EEDC00AE4A9E /* AsyncAwaitTest */ = {
 			isa = PBXGroup;
 			children = (
+				9617DB2C1E6C91CA0062A33F /* Page */,
 				96FF37E41E67EEDC00AE4A9E /* AppDelegate.swift */,
-				96FF37E61E67EEDC00AE4A9E /* ViewController.swift */,
-				96FF37E81E67EEDC00AE4A9E /* Main.storyboard */,
 				96FF37EB1E67EEDC00AE4A9E /* Assets.xcassets */,
 				96FF37ED1E67EEDC00AE4A9E /* LaunchScreen.storyboard */,
 				96FF37F01E67EEDC00AE4A9E /* Info.plist */,
 			);
+			name = AsyncAwaitTest;
 			path = TEst;
 			sourceTree = "<group>";
 		};
@@ -137,7 +161,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9617DB2B1E6C919B0062A33F /* Global.swift in Sources */,
 				96FF37E71E67EEDC00AE4A9E /* ViewController.swift in Sources */,
+				9617DB291E6C917A0062A33F /* Task.swift in Sources */,
 				96FF37E51E67EEDC00AE4A9E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

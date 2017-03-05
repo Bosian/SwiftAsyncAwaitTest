@@ -8,58 +8,6 @@
 
 import UIKit
 
-struct Task<T> {
-    
-    private let group: DispatchGroup
-    private let block: () -> T
-    
-    /// 以同步方式取值
-    var result: T {
-        
-        var value: T?
-        
-        group.enter()
-        async(.global()) {
-            
-            value = self.block()
-            
-            self.group.leave()
-        }
-        
-        group.wait()
-        
-        return value!
-    }
-    
-    init(group: DispatchGroup = DispatchGroup(), block: @escaping () -> T) {
-        self.group = group
-        self.block = block
-    }
-    
-    func runAsync() {
-        async(.global()) {
-            _ = self.block()
-        }
-    }
-}
-
-func await<T>(_ task: Task<T>, updateUI: ((_ result: T) -> Void)? = nil) -> T {
-    
-    let result = task.result
-    
-    async(.main) { 
-        updateUI?(result)
-    }
-    
-    return result
-}
-
-func async(_ queue: DispatchQueue, block: @escaping () -> Void) {
-    queue.async {
-        block()
-    }
-}
-
 class ViewController: UIViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
